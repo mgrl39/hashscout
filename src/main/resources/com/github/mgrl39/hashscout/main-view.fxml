@@ -41,8 +41,8 @@
                     </HBox>
                     <!-- Indicador de archivo seleccionado -->
                     <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
-                        <Label text="Archivo seleccionado:" styleClass="label-header"/>
-                        <Label fx:id="selectedFileLabel" text="Ninguno" styleClass="label-value"/>
+                        <Label text="Arxiu seleccionat:" styleClass="label-header"/>
+                        <Label fx:id="selectedFileLabel" text="Cap fitxer seleccionat" styleClass="label-value"/>
                     </HBox>
                     <TitledPane text="Hash Result" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="hashResultArea"
@@ -76,7 +76,7 @@
                     <!-- Indicador de carpeta seleccionada -->
                     <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
                         <Label text="Carpeta seleccionada:" styleClass="label-header"/>
-                        <Label fx:id="selectedSearchFolderLabel" text="Ninguna" styleClass="label-value"/>
+                        <Label fx:id="selectedSearchFolderLabel" text="Cap carpeta seleccionada" styleClass="label-value"/>
                     </HBox>
                     <TitledPane text="Search Results" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="searchResultArea"
