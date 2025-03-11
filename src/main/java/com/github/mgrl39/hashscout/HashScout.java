@@ -12,10 +12,18 @@ public class HashScout extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(HashScout.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
-        // Añadir icono (opcional)
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+        // Comentar o eliminar esta línea para evitar el error si no tienes el archivo icon.png
+        // stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+        
+        // Alternativa: verificar que el recurso existe antes de usarlo
+        /*
+        var iconStream = getClass().getResourceAsStream("/icon.png");
+        if (iconStream != null) {
+            stage.getIcons().add(new Image(iconStream));
+        }
+        */
 
         stage.setTitle("HashScout");
         stage.setScene(scene);
