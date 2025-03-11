@@ -55,7 +55,6 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        // Inicializar Logger
         logger = new Logger(logTerminal);
         hashGenerator = new HashGenerator();
         fileSearcher = new FileSearcher(logger);
@@ -170,14 +169,6 @@ public class MainController {
     private void showWarning(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Advertència");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showError(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

@@ -13,11 +13,11 @@
 
     <top>
         <MenuBar styleClass="menu-bar">
-            <Menu text="Archivo" styleClass="menu">
+            <Menu text="Arxiu" styleClass="menu">
                 <MenuItem text="Salir" onAction="#handleExit" styleClass="menu-item" />
             </Menu>
-            <Menu text="Ayuda" styleClass="menu">
-                <MenuItem text="Acerca de" onAction="#handleAbout" styleClass="menu-item" />
+            <Menu text="Ajuda" styleClass="menu">
+                <MenuItem text="Info" onAction="#handleAbout" styleClass="menu-item" />
             </Menu>
         </MenuBar>
     </top>
