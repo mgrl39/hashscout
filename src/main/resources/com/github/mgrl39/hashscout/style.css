@@ -73,3 +73,18 @@
     -fx-border-color: #dfe6e9;
     -fx-border-radius: 5px;
 }
+
+/* Estilos para las barras de progreso */
+.progress-bar {
+    -fx-accent: #a3d8a3; /* Color verde suave para el progreso */
+}
+
+.progress-bar .track {
+    -fx-background-color: #e8e8e8;
+    -fx-background-radius: 5px;
+}
+
+.progress-bar .bar {
+    -fx-background-radius: 5px;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.15), 5, 0.0, 0, 1);
+}

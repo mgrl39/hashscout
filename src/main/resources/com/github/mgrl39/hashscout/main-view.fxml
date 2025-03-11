@@ -39,6 +39,11 @@
                                 onAction="#onGenerateHash"
                                 styleClass="btn btn-primary"/>
                     </HBox>
+                    <!-- Indicador de archivo seleccionado -->
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
+                        <Label text="Archivo seleccionado:" styleClass="label-header"/>
+                        <Label fx:id="selectedFileLabel" text="Ninguno" styleClass="label-value"/>
+                    </HBox>
                     <TitledPane text="Hash Result" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="hashResultArea"
                                  editable="false"
@@ -46,6 +51,11 @@
                                  prefRowCount="5"
                                  styleClass="text-area"/>
                     </TitledPane>
+                    <!-- Barra de progreso para Hash Generator -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Progrés:" styleClass="label"/>
+                        <ProgressBar fx:id="hashProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
+                    </HBox>
                 </VBox>
             </Tab>
 
@@ -63,6 +73,11 @@
                                 onAction="#onSearchText"
                                 styleClass="btn btn-success"/>
                     </HBox>
+                    <!-- Indicador de carpeta seleccionada -->
+                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
+                        <Label text="Carpeta seleccionada:" styleClass="label-header"/>
+                        <Label fx:id="selectedSearchFolderLabel" text="Ninguna" styleClass="label-value"/>
+                    </HBox>
                     <TitledPane text="Search Results" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="searchResultArea"
                                  editable="false"
@@ -70,6 +85,11 @@
                                  prefRowCount="15"
                                  styleClass="text-area"/>
                     </TitledPane>
+                    <!-- Barra de progreso para File Search -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Progrés:" styleClass="label"/>
+                        <ProgressBar fx:id="searchProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
+                    </HBox>
                 </VBox>
             </Tab>
 
@@ -85,6 +105,11 @@
                                  prefRowCount="15"
                                  styleClass="text-area"/>
                     </TitledPane>
+                    <!-- Barra de progreso para File Organizer -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Progrés:" styleClass="label"/>
+                        <ProgressBar fx:id="organizeProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
+                    </HBox>
                 </VBox>
             </Tab>
         </TabPane>
