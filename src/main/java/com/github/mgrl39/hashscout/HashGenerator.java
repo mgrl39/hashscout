@@ -8,7 +8,6 @@ import java.security.MessageDigest;
 import java.util.HexFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
-import com.github.mgrl39.hashscout.ProgressUtils;
 
 public class HashGenerator {
 
