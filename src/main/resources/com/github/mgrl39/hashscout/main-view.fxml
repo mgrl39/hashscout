@@ -9,23 +9,23 @@
             fx:controller="com.github.mgrl39.hashscout.MainController"
             prefWidth="800"
             prefHeight="600"
-            style="-fx-padding: 10;">
+            styleClass="border-pane">
 
     <!-- Menú Superior -->
     <top>
-        <MenuBar>
-            <Menu text="Archivo">
-                <MenuItem text="Salir" onAction="#handleExit"/>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="Archivo" styleClass="menu">
+                <MenuItem text="Salir" onAction="#handleExit" styleClass="menu-item"/>
             </Menu>
-            <Menu text="Ayuda">
-                <MenuItem text="Acerca de" onAction="#handleAbout"/>
+            <Menu text="Ayuda" styleClass="menu">
+                <MenuItem text="Acerca de" onAction="#handleAbout" styleClass="menu-item"/>
             </Menu>
         </MenuBar>
     </top>
 
     <!-- Contenido Principal -->
     <center>
-        <TabPane tabClosingPolicy="UNAVAILABLE">
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
             <Tab text="Hash Generator">
                 <VBox spacing="10" style="-fx-padding: 10;">
                     <HBox spacing="10" alignment="CENTER_LEFT">
@@ -34,13 +34,14 @@
                                 styleClass="combo-box"/>
                         <Button text="Generate Hash" 
                                 onAction="#onGenerateHash"
-                                styleClass="btn,btn-primary"/>
+                                styleClass="btn btn-primary"/>
                     </HBox>
-                    <TitledPane text="Hash Result" expanded="true">
+                    <TitledPane text="Hash Result" expanded="true" styleClass="titled-pane">
                         <TextArea fx:id="hashResultArea"
                                  editable="false"
                                  wrapText="true"
-                                 prefRowCount="3"/>
+                                 prefRowCount="3"
+                                 styleClass="text-area"/>
                     </TitledPane>
                 </VBox>
             </Tab>
@@ -50,16 +51,18 @@
                     <HBox spacing="10" alignment="CENTER">
                         <TextField fx:id="searchTextField"
                                  promptText="Enter search term..."
-                                 HBox.hgrow="ALWAYS"/>
+                                 HBox.hgrow="ALWAYS"
+                                 styleClass="form-control"/>
                         <Button text="Search" 
                                 onAction="#onSearchText"
-                                styleClass="btn,btn-success"/>
+                                styleClass="btn btn-success"/>
                     </HBox>
-                    <TitledPane text="Search Results" expanded="true">
+                    <TitledPane text="Search Results" expanded="true" styleClass="titled-pane">
                         <TextArea fx:id="searchResultArea"
                                  editable="false"
                                  wrapText="true"
-                                 prefRowCount="10"/>
+                                 prefRowCount="10"
+                                 styleClass="text-area"/>
                     </TitledPane>
                 </VBox>
             </Tab>
@@ -68,15 +71,12 @@
                 <VBox spacing="10" style="-fx-padding: 10;">
                     <Button text="Select Folder to Organize" 
                             onAction="#onOrganizeFiles"
-                            styleClass="btn,btn-info"/>
-                    <TitledPane text="Organization Log" expanded="true">
+                            styleClass="button-select-folder"/>
+                    <TitledPane text="Organization Log" expanded="true" styleClass="titled-pane">
                         <TextArea fx:id="logTerminal"
                                  editable="false"
                                  wrapText="true"
-                                 style="-fx-font-family: 'Consolas', 'Monaco', monospace;
-                                        -fx-font-size: 12px;
-                                        -fx-background-color: #2b2b2b;
-                                        -fx-text-fill: #a9b7c6;"/>
+                                 styleClass="text-area"/>
                     </TitledPane>
                 </VBox>
             </Tab>
@@ -86,7 +86,7 @@
     <!-- Barra de Estado -->
     <bottom>
         <HBox alignment="CENTER_LEFT" style="-fx-padding: 5;">
-            <Label fx:id="statusLabel" text="Ready"/>
+            <Label fx:id="statusLabel" text="Ready" styleClass="label"/>
         </HBox>
     </bottom>
 

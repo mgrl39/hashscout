@@ -14,6 +14,9 @@ public class HashScout extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HashScout.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
+        // Añadir el archivo CSS al escenari
+        scene.getStylesheets().add(HashScout.class.getResource("style.css").toExternalForm());
+
         stage.setTitle("HashScout");
         stage.setScene(scene);
         stage.show();

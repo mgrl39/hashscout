@@ -1,20 +1,75 @@
 .root {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: #f0f4f8; /* Soft light blue background */
 }
 
 .label {
-    -fx-text-fill: #ffffff;
-}
-
-.button {
-    -fx-background-color: #2d2d2d;
-    -fx-text-fill: #ffffff;
-    -fx-border-radius: 5px;
-    -fx-border-color: #4CAF50;
-    -fx-padding: 5px 10px;
+    -fx-text-fill: #2c3e50; /* Darker blue for contrast */
     -fx-font-size: 14px;
 }
 
+.button {
+    -fx-background-color: #a3c9f1; /* Soft blue */
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #82b1e1;
+    -fx-padding: 8px 15px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.5, 0, 1);
+    -fx-cursor: hand;
+}
+
 .button:hover {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #82b1e1; /* Slightly darker on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.7, 0, 2);
+}
+
+.button-select-folder {
+    -fx-background-color: #f7b7a3; /* Soft coral */
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #f5a58b;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0.5, 0, 1);
+    -fx-cursor: hand;
+}
+
+.button-select-folder:hover {
+    -fx-background-color: #f5a58b; /* Slightly darker on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.7, 0, 2);
+}
+
+.text-area {
+    -fx-background-color: #ffffff; /* White background for text areas */
+    -fx-text-fill: #34495e; /* Darker text */
+    -fx-font-family: 'Consolas', 'Monaco', monospace;
+    -fx-font-size: 12px;
+    -fx-padding: 10px;
+    -fx-border-color: #dfe6e9; /* Light border */
+    -fx-border-radius: 5px;
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #34495e;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 5px;
+}
+
+.titled-pane {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2c3e50;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 5px;
+}
+
+.menu-bar, .menu, .menu-item {
+    -fx-background-color: #bdc3c7; /* Soft grey */
+    -fx-text-fill: #2c3e50; /* Darker text */
+}
+
+.tab-pane {
+    -fx-background-color: #f0f4f8;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 5px;
 }
