@@ -92,14 +92,16 @@ public class MainController {
         }
 
         String algorithm = hashTypeComboBox.getValue();
-        try {
-            String hash = hashGenerator.generateHash(selectedFile, algorithm);
-            hashResultArea.setText(algorithm + ": " + hash);
-            logger.log("✔️ Hash generat amb èxit: " + hash);
-        } catch (Exception e) {
-            logger.log("❌ Error generant hash: " + e.getMessage());
-            showError("Error generant hash", e.getMessage());
-        }
+        hashResultArea.clear();
+        
+        hashGenerator.generateHashWithProgress(
+            selectedFile,
+            algorithm,
+            result -> hashResultArea.setText(result),
+            progress -> hashProgressBar.setProgress(progress)
+        );
+        
+        logger.log("⏳ Generant hash " + algorithm + " per " + selectedFile.getName());
     }
 
     @FXML
@@ -157,7 +159,12 @@ public class MainController {
             return;
         }
 
-        fileOrganizer.organizeFiles(selectedOrganizeFolder.toPath());
+        fileOrganizer.organizeFiles(
+            selectedOrganizeFolder.toPath(),
+            progress -> organizeProgressBar.setProgress(progress)
+        );
+        
+        logger.log("⏳ Organitzant fitxers a " + selectedOrganizeFolder.getPath());
     }
 
     private void showWarning(String message) {

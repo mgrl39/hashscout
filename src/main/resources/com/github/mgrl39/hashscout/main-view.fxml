@@ -109,7 +109,7 @@
             <Label text="Carpeta seleccionada:" styleClass="label-header"/>
             <Label fx:id="selectedOrganizeFolderLabel" text="Cap carpeta seleccionada" styleClass="label-value"/>
         </HBox>
-        <TitledPane text="Organization Log" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
+        <TitledPane text="General Log" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
             <TextArea fx:id="logTerminal"
                      editable="false"
                      wrapText="true"
