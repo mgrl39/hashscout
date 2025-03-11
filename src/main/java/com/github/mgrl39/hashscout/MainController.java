@@ -73,29 +73,62 @@ public class MainController {
         });
     }
 
-    // ✅ Generador de Hash
-    @FXML
-    protected void onGenerateHash() {
-        if (hashTypeComboBox.getValue() == null) {
-            appendLog("ERROR: Si us plau, selecciona un tipus de hash");
-            return;
+    // Definir una clase de excepción personalizada
+    private class NoFileSelectedException extends Exception {
+        public NoFileSelectedException(String message) {
+            super(message);
         }
+    }
 
+    private File selectedFile = null;
+
+    @FXML
+    protected void onSelectFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecciona un fitxer");
         File file = fileChooser.showOpenDialog(statusLabel.getScene().getWindow());
 
         if (file != null) {
-            try {
-                appendLog("Generant hash " + hashTypeComboBox.getValue() + " per a: " + file.getName());
-                String hash = generateHash(file, hashTypeComboBox.getValue());
-                hashResultArea.setText(hashTypeComboBox.getValue() + ": " + hash);
-                appendLog("Hash generat amb èxit: " + hash);
-            } catch (Exception e) {
-                String errorMsg = "Error generant hash: " + e.getMessage();
-                statusLabel.setText(errorMsg);
-                appendLog("ERROR: " + errorMsg);
+            selectedFile = file;
+            appendLog("Fitxer seleccionat: " + file.getName());
+        }
+    }
+
+    @FXML
+    protected void onGenerateHash() {
+        try {
+            if (hashTypeComboBox.getValue() == null) {
+                throw new NoFileSelectedException("No s'ha seleccionat cap tipus de hash");
             }
+
+            if (selectedFile == null) {
+                throw new NoFileSelectedException("No s'ha seleccionat cap fitxer");
+            }
+
+            appendLog("Generant hash " + hashTypeComboBox.getValue() + " per a: " + selectedFile.getName());
+            String hash = generateHash(selectedFile, hashTypeComboBox.getValue());
+            hashResultArea.setText(hashTypeComboBox.getValue() + ": " + hash);
+            appendLog("Hash generat amb èxit: " + hash);
+        } catch (NoFileSelectedException e) {
+            // Mostrar un diálogo de alerta
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertència");
+            alert.setHeaderText("Error en la generació de hash");
+            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
+            alert.showAndWait();
+            
+            appendLog("EXCEPCIÓ: " + e.getMessage());
+            statusLabel.setText("Error: " + e.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la generació de hash");
+            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
+            alert.showAndWait();
+            
+            String errorMsg = "Error generant hash: " + e.getMessage();
+            statusLabel.setText(errorMsg);
+            appendLog("EXCEPCIÓ: " + errorMsg);
         }
     }
 
@@ -106,23 +139,36 @@ public class MainController {
         return HexFormat.of().formatHex(hash);
     }
 
-    // ✅ Cercador de Text (tipus grep)
-    @FXML
-    protected void onSearchText() {
-        if (searchTextField.getText().isEmpty()) {
-            appendLog("ERROR: Si us plau, introdueix un terme de cerca");
-            return;
-        }
+    // Variables para almacenar selecciones
+    private File selectedSearchFolder = null;
 
+    @FXML
+    protected void onSelectFolderForSearch() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Selecciona una carpeta");
         File folder = directoryChooser.showDialog(statusLabel.getScene().getWindow());
 
         if (folder != null && folder.isDirectory()) {
+            selectedSearchFolder = folder;
+            appendLog("Carpeta seleccionada per a cerca: " + folder.getPath());
+        }
+    }
+
+    @FXML
+    protected void onSearchText() {
+        try {
+            if (searchTextField.getText().isEmpty()) {
+                throw new NoFileSelectedException("No s'ha introduït cap terme de cerca");
+            }
+
+            if (selectedSearchFolder == null) {
+                throw new NoFileSelectedException("No s'ha seleccionat cap carpeta per a la cerca");
+            }
+
             String searchTerm = searchTextField.getText();
-            appendLog("Iniciant cerca per: '" + searchTerm + "' a " + folder.getPath());
-            
-            try (Stream<Path> files = Files.walk(folder.toPath())) {
+            appendLog("Iniciant cerca per: '" + searchTerm + "' a " + selectedSearchFolder.getPath());
+
+            try (Stream<Path> files = Files.walk(selectedSearchFolder.toPath())) {
                 StringBuilder results = new StringBuilder();
                 files.filter(Files::isRegularFile)
                      .forEach(path -> {
@@ -138,13 +184,29 @@ public class MainController {
                      });
 
                 String finalResults = results.toString();
-                statusLabel.setText(finalResults.isEmpty() ? "No s'han trobat coincidències" : finalResults);
+                searchResultArea.setText(finalResults);
+                statusLabel.setText(finalResults.isEmpty() ? "No s'han trobat coincidències" : "S'han trobat coincidències");
                 appendLog("Cerca completada.");
-            } catch (IOException e) {
-                String errorMsg = "Error cercant fitxers: " + e.getMessage();
-                statusLabel.setText(errorMsg);
-                appendLog("ERROR: " + errorMsg);
             }
+        } catch (NoFileSelectedException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertència");
+            alert.setHeaderText("Error en la cerca");
+            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
+            alert.showAndWait();
+            
+            appendLog("EXCEPCIÓ: " + e.getMessage());
+            statusLabel.setText("Error: " + e.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la cerca");
+            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
+            alert.showAndWait();
+            
+            String errorMsg = "Error cercant fitxers: " + e.getMessage();
+            statusLabel.setText(errorMsg);
+            appendLog("EXCEPCIÓ: " + errorMsg);
         }
     }
 
@@ -156,38 +218,38 @@ public class MainController {
         }
     }
 
-    // ✅ Organitzador de Fitxers
     @FXML
     protected void onOrganizeFiles() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Selecciona una carpeta");
-        File folder = directoryChooser.showDialog(statusLabel.getScene().getWindow());
+        try {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Selecciona una carpeta");
+            File folder = directoryChooser.showDialog(statusLabel.getScene().getWindow());
 
-        if (folder != null && folder.isDirectory()) {
+            if (folder == null || !folder.isDirectory()) {
+                throw new NoFileSelectedException("No s'ha seleccionat cap carpeta per organitzar");
+            }
+
             appendLog("🔍 Iniciant organització de fitxers a: " + folder.getPath());
             appendLog("----------------------------------------");
-            
+
             try (Stream<Path> files = Files.list(folder.toPath())) {
-                // Crear un mapa per comptar fitxers per categoria
                 Map<String, Integer> categoryCount = new HashMap<>();
-                
+
                 files.forEach(file -> {
                     if (Files.isRegularFile(file)) {
                         try {
                             String extension = getExtension(file.getFileName().toString());
                             String category = getCategoryForExtension(extension);
                             Path targetDir = folder.toPath().resolve(category);
-                            
-                            // Actualitzar comptador
+
                             categoryCount.merge(category, 1, Integer::sum);
-                            
+
                             appendLog("📄 Processant: " + file.getFileName());
                             appendLog("   └─ Categoria: " + category + " (" + extension + ")");
-                            
+
                             Files.createDirectories(targetDir);
-                            Files.move(file, targetDir.resolve(file.getFileName()), 
-                                     StandardCopyOption.REPLACE_EXISTING);
-                            
+                            Files.move(file, targetDir.resolve(file.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+
                             appendLog("   └─ ✅ Mogut a: " + targetDir.getFileName());
                         } catch (IOException e) {
                             String errorMsg = "Error movent fitxer " + file + ": " + e.getMessage();
@@ -197,23 +259,36 @@ public class MainController {
                     }
                 });
 
-                // Mostrar resum
                 appendLog("----------------------------------------");
                 appendLog("📊 Resum de l'organització:");
-                categoryCount.forEach((category, count) -> 
+                categoryCount.forEach((category, count) ->
                     appendLog("   " + category + ": " + count + " fitxers"));
                 appendLog("----------------------------------------");
-                
+
                 String summary = categoryCount.entrySet().stream()
                     .map(e -> e.getKey() + ": " + e.getValue())
                     .collect(Collectors.joining(", "));
                 statusLabel.setText("Fitxers organitzats amb èxit! " + summary);
-                
-            } catch (IOException e) {
-                String errorMsg = "Error organitzant fitxers: " + e.getMessage();
-                statusLabel.setText(errorMsg);
-                appendLog("❌ ERROR: " + errorMsg);
             }
+        } catch (NoFileSelectedException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertència");
+            alert.setHeaderText("Error en l'organització");
+            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
+            alert.showAndWait();
+            
+            appendLog("EXCEPCIÓ: " + e.getMessage());
+            statusLabel.setText("Error: " + e.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en l'organització");
+            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
+            alert.showAndWait();
+            
+            String errorMsg = "Error organitzant fitxers: " + e.getMessage();
+            statusLabel.setText(errorMsg);
+            appendLog("EXCEPCIÓ: " + errorMsg);
         }
     }
 

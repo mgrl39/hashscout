@@ -12,7 +12,7 @@ public class HashScout extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(HashScout.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 900, 700);
 
         // Añadir el archivo CSS al escenari
         scene.getStylesheets().add(HashScout.class.getResource("style.css").toExternalForm());

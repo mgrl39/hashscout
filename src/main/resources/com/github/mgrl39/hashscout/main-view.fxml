@@ -7,8 +7,8 @@
 <BorderPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.github.mgrl39.hashscout.MainController"
-            prefWidth="800"
-            prefHeight="600"
+            prefWidth="900"
+            prefHeight="700"
             styleClass="border-pane">
 
     <!-- Menú Superior -->
@@ -25,57 +25,64 @@
 
     <!-- Contenido Principal -->
     <center>
-        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane" VBox.vgrow="ALWAYS">
             <Tab text="Hash Generator">
-                <VBox spacing="10" style="-fx-padding: 10;">
+                <VBox spacing="15" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <ComboBox fx:id="hashTypeComboBox" 
                                 promptText="Select Hash Type"
                                 styleClass="combo-box"/>
+                        <Button text="Select File" 
+                                onAction="#onSelectFile"
+                                styleClass="btn btn-info"/>
                         <Button text="Generate Hash" 
                                 onAction="#onGenerateHash"
                                 styleClass="btn btn-primary"/>
                     </HBox>
-                    <TitledPane text="Hash Result" expanded="true" styleClass="titled-pane">
+                    <TitledPane text="Hash Result" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="hashResultArea"
                                  editable="false"
                                  wrapText="true"
-                                 prefRowCount="3"
+                                 prefRowCount="5"
                                  styleClass="text-area"/>
                     </TitledPane>
                 </VBox>
             </Tab>
 
             <Tab text="File Search">
-                <VBox spacing="10" style="-fx-padding: 10;">
+                <VBox spacing="15" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
                     <HBox spacing="10" alignment="CENTER">
                         <TextField fx:id="searchTextField"
                                  promptText="Enter search term..."
                                  HBox.hgrow="ALWAYS"
                                  styleClass="form-control"/>
+                        <Button text="Select Folder" 
+                                onAction="#onSelectFolderForSearch"
+                                styleClass="btn btn-info"/>
                         <Button text="Search" 
                                 onAction="#onSearchText"
                                 styleClass="btn btn-success"/>
                     </HBox>
-                    <TitledPane text="Search Results" expanded="true" styleClass="titled-pane">
+                    <TitledPane text="Search Results" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="searchResultArea"
                                  editable="false"
                                  wrapText="true"
-                                 prefRowCount="10"
+                                 prefRowCount="15"
                                  styleClass="text-area"/>
                     </TitledPane>
                 </VBox>
             </Tab>
 
             <Tab text="File Organizer">
-                <VBox spacing="10" style="-fx-padding: 10;">
+                <VBox spacing="15" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
                     <Button text="Select Folder to Organize" 
                             onAction="#onOrganizeFiles"
                             styleClass="button-select-folder"/>
-                    <TitledPane text="Organization Log" expanded="true" styleClass="titled-pane">
+                    <TitledPane text="Organization Log" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
                         <TextArea fx:id="logTerminal"
                                  editable="false"
                                  wrapText="true"
+                                 prefRowCount="15"
                                  styleClass="text-area"/>
                     </TitledPane>
                 </VBox>
