@@ -7,6 +7,19 @@ import javafx.scene.control.*;
 
 import java.io.File;
 
+/**
+ * @class MainController
+ * @brief Controlador principal que gestiona la interfície d'usuari i la lògica de l'aplicació
+ *
+ * Aquesta classe demostra:
+ * - Arquitectura MVC amb FXML
+ * - Gestió d'esdeveniments JavaFX
+ * - Injecció de dependències
+ * - Validació d'entrada d'usuari
+ * - Feedback visual amb alerts i progress bars
+ *
+ * @author mgrl39
+ */
 public class MainController {
 
     @FXML
@@ -53,6 +66,15 @@ public class MainController {
     private File selectedSearchFolder;
     private File selectedOrganizeFolder;
 
+    /**
+     * @brief Inicialitza el controlador i configura els components
+     *
+     * Implementa:
+     * - Inicialització de serveis
+     * - Configuració de ComboBox
+     * - Setup de Progress Bars
+     * - Logging inicial
+     */
     @FXML
     public void initialize() {
         logger = new Logger(logTerminal);
@@ -70,6 +92,15 @@ public class MainController {
         organizeProgressBar.setProgress(0);
     }
 
+    /**
+     * @brief Gestiona la selecció de fitxers
+     *
+     * Demostra:
+     * - Ús de FileChooser
+     * - Actualització d'etiquetes
+     * - Logging d'accions
+     * - Validació de selecció
+     */
     @FXML
     protected void onSelectFile() {
         FileChooser fileChooser = new FileChooser();

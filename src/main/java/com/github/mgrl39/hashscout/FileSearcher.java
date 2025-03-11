@@ -11,6 +11,17 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @class FileSearcher
+ * @brief Cercador de text que implementa cerca concurrent i eficient
+ *
+ * Demostra:
+ * - Ús avançat de Streams amb Files.walk
+ * - Programació concurrent segura
+ * - Gestió eficient de recursos
+ * - Patró Observer per resultats
+ * - StringBuilder per rendiment
+ */
 public class FileSearcher {
 
     private final Logger logger;
@@ -19,6 +30,20 @@ public class FileSearcher {
         this.logger = logger;
     }
 
+    /**
+     * @brief Cerca text en fitxers de manera concurrent
+     *
+     * Implementa:
+     * - Streams per recórrer fitxers
+     * - Lambdes per processar resultats
+     * - Platform.runLater per actualitzacions UI
+     * - Try-with-resources per gestió de recursos
+     *
+     * @param folder Carpeta on cercar
+     * @param searchTerm Text a cercar
+     * @param resultConsumer Consumer pels resultats
+     * @param progressConsumer Consumer pel progrés
+     */
     public void searchText(Path folder, String searchTerm, Consumer<String> resultConsumer, Consumer<Double> progressConsumer) {
         AtomicBoolean searchCompleted = new AtomicBoolean(false);
 
