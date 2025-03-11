@@ -22,12 +22,10 @@ public class FileOrganizer {
     public void organizeFiles(Path folder, Consumer<Double> progressConsumer) {
         AtomicBoolean completed = new AtomicBoolean(false);
         
-        // Hilo para simular progreso
         Thread progressThread = new Thread(() -> simulateProgress(progressConsumer, completed));
         progressThread.setDaemon(true);
         progressThread.start();
         
-        // Hilo para organización real
         new Thread(() -> {
             try (Stream<Path> files = Files.list(folder)) {
                 Map<String, Integer> categoryCount = new HashMap<>();

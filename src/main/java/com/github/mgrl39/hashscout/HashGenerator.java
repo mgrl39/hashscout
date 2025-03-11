@@ -18,16 +18,13 @@ public class HashGenerator {
         return HexFormat.of().formatHex(hash);
     }
     
-    // Método con barra de progreso
     public void generateHashWithProgress(File file, String algorithm, Consumer<String> resultConsumer, Consumer<Double> progressConsumer) {
         AtomicBoolean completed = new AtomicBoolean(false);
         
-        // Hilo para simular progreso
         Thread progressThread = new Thread(() -> simulateProgress(progressConsumer, completed));
         progressThread.setDaemon(true);
         progressThread.start();
         
-        // Hilo para el cálculo real
         new Thread(() -> {
             try {
                 String hash = generateHash(file, algorithm);
