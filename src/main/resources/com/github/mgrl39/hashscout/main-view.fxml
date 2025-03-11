@@ -93,25 +93,37 @@
                 </VBox>
             </Tab>
 
-            <Tab text="File Organizer">
-                <VBox spacing="15" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
-                    <Button text="Select Folder to Organize" 
-                            onAction="#onOrganizeFiles"
-                            styleClass="button-select-folder"/>
-                    <TitledPane text="Organization Log" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
-                        <TextArea fx:id="logTerminal"
-                                 editable="false"
-                                 wrapText="true"
-                                 prefRowCount="15"
-                                 styleClass="text-area"/>
-                    </TitledPane>
-                    <!-- Barra de progreso para File Organizer -->
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Label text="Progrés:" styleClass="label"/>
-                        <ProgressBar fx:id="organizeProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
-                    </HBox>
-                </VBox>
-            </Tab>
+<Tab text="File Organizer">
+    <VBox spacing="15" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
+        <!-- Nueva fila con dos botones -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="Select Folder" 
+                    onAction="#onSelectFolderForOrganization"
+                    styleClass="btn btn-info"/>
+            <Button text="Organize Files" 
+                    onAction="#onOrganizeFiles"
+                    styleClass="btn btn-success"/>
+        </HBox>
+        <!-- Indicador de carpeta seleccionada -->
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
+            <Label text="Carpeta seleccionada:" styleClass="label-header"/>
+            <Label fx:id="selectedOrganizeFolderLabel" text="Cap carpeta seleccionada" styleClass="label-value"/>
+        </HBox>
+        <TitledPane text="Organization Log" expanded="true" styleClass="titled-pane" VBox.vgrow="ALWAYS">
+            <TextArea fx:id="logTerminal"
+                     editable="false"
+                     wrapText="true"
+                     prefRowCount="15"
+                     styleClass="text-area"/>
+        </TitledPane>
+        <!-- Barra de progreso para File Organizer -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Progrés:" styleClass="label"/>
+            <ProgressBar fx:id="organizeProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
+        </HBox>
+    </VBox>
+</Tab>
+
         </TabPane>
     </center>
 

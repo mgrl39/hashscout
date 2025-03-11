@@ -42,12 +42,16 @@ public class MainController {
     @FXML
     private Label selectedSearchFolderLabel;
 
+    @FXML
+    private Label selectedOrganizeFolderLabel;
+
     private Logger logger;
     private HashGenerator hashGenerator;
     private FileSearcher fileSearcher;
     private FileOrganizer fileOrganizer;
     private File selectedFile;
     private File selectedSearchFolder;
+    private File selectedOrganizeFolder;
 
     @FXML
     public void initialize() {
@@ -134,13 +138,26 @@ public class MainController {
     }
 
     @FXML
+    protected void onSelectFolderForOrganization() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Selecciona una carpeta per organitzar");
+        File folder = directoryChooser.showDialog(statusLabel.getScene().getWindow());
+
+        if (folder != null) {
+            selectedOrganizeFolder = folder;
+            selectedOrganizeFolderLabel.setText(folder.getPath());
+            logger.log("📁 Carpeta seleccionada per a organització: " + folder.getPath());
+        }
+    }
+
+    @FXML
     protected void onOrganizeFiles() {
-        if (selectedSearchFolder == null) {
+        if (selectedOrganizeFolder == null) {
             showWarning("Selecciona una carpeta abans d'organitzar.");
             return;
         }
 
-        fileOrganizer.organizeFiles(selectedSearchFolder.toPath());
+        fileOrganizer.organizeFiles(selectedOrganizeFolder.toPath());
     }
 
     private void showWarning(String message) {
