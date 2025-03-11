@@ -40,14 +40,9 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Crear o cambiar a la rama gh-pages
-          if ! git ls-remote --exit-code --heads origin gh-pages; then
-            git checkout --orphan gh-pages
-            git rm -rf .
-          else
-            git fetch origin gh-pages
-            git checkout gh-pages
-          fi
+          # Always create a fresh gh-pages branch
+          git checkout --orphan gh-pages
+          git rm -rf .
 
           # Copiar la documentación desde el directorio temporal
           if [ -d "/tmp/artifacts/docs" ]; then
