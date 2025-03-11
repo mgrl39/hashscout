@@ -1,0 +1,7 @@
+<map id="com.github.mgrl39.hashscout.HashGenerator.generateHashWithProgress" name="com.github.mgrl39.hashscout.HashGenerator.generateHashWithProgress">
+<area shape="rect" id="Node000001" title="Genera hash de manera asíncrona amb indicador de progrés." alt="" coords="5,37,305,77"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1HashGenerator.html#aa3a900e3c255feeb4b9c4c977ad92938" title="Genera el hash d&#39;un fitxer utilitzant l&#39;algorisme especificat." alt="" coords="357,5,575,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="305,39,342,35,343,41,306,45"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1ProgressUtils.html#abaddd08b83491aea5656d22827a8256e" title="Simula el progrés d&#39;una operació de manera suau." alt="" coords="353,69,579,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="306,70,340,74,339,79,305,75"/>
+</map>

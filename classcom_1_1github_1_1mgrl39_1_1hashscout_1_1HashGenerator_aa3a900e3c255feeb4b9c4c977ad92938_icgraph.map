@@ -1,0 +1,7 @@
+<map id="com.github.mgrl39.hashscout.HashGenerator.generateHash" name="com.github.mgrl39.hashscout.HashGenerator.generateHash">
+<area shape="rect" id="Node000001" title="Genera el hash d&#39;un fitxer utilitzant l&#39;algorisme especificat." alt="" coords="632,5,851,45"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1HashGenerator.html#a09fe137afa48ef56aaed90df1247c587" title="Genera hash de manera asíncrona amb indicador de progrés." alt="" coords="284,5,584,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="618,28,584,28,584,23,618,23"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#abae677dbde84ef92959dc911b839f830" title=" " alt="" coords="5,5,236,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="270,28,236,28,236,23,270,23"/>
+</map>

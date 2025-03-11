@@ -1,0 +1,15 @@
+<map id="com.github.mgrl39.hashscout.ProgressUtils.simulateProgress" name="com.github.mgrl39.hashscout.ProgressUtils.simulateProgress">
+<area shape="rect" id="Node000001" title="Simula el progrés d&#39;una operació de manera suau." alt="" coords="632,69,857,109"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1HashGenerator.html#a09fe137afa48ef56aaed90df1247c587" title="Genera hash de manera asíncrona amb indicador de progrés." alt="" coords="284,5,584,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="633,69,531,48,532,43,634,64"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileOrganizer.html#a0a3d0d78c8b81a655650d47f5e99be94" title="Organitza els fitxers d&#39;una carpeta en categories." alt="" coords="325,69,543,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="618,92,543,92,543,87,618,87"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileSearcher.html#ab12c3a2c21ac02c2d1d297b4117c212c" title="Cerca text en fitxers de manera concurrent." alt="" coords="325,133,543,173"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="634,115,532,136,531,131,633,110"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#abae677dbde84ef92959dc911b839f830" title=" " alt="" coords="5,5,236,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="270,28,236,28,236,23,270,23"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ab2de237906a855734ff383e835514ed6" title=" " alt="" coords="8,69,233,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="311,92,234,92,234,87,311,87"/>
+<area shape="rect" id="Node000007" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ad9c0486da5b0d8c5cde40ecc74661e42" title=" " alt="" coords="11,133,230,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="311,156,230,156,230,151,311,151"/>
+</map>

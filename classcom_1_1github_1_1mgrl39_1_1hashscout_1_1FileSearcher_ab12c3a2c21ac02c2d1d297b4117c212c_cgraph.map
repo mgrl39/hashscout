@@ -1,0 +1,7 @@
+<map id="com.github.mgrl39.hashscout.FileSearcher.searchText" name="com.github.mgrl39.hashscout.FileSearcher.searchText">
+<area shape="rect" id="Node000001" title="Cerca text en fitxers de manera concurrent." alt="" coords="5,37,224,77"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1Logger.html#a48f39505a890420beb38525a0b753a06" title="Registra un missatge amb timestamp al terminal." alt="" coords="275,5,494,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="224,42,261,37,262,43,225,47"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1ProgressUtils.html#abaddd08b83491aea5656d22827a8256e" title="Simula el progrés d&#39;una operació de manera suau." alt="" coords="272,69,497,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="225,68,259,72,258,77,224,73"/>
+</map>

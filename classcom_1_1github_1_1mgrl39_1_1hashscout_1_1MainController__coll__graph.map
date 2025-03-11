@@ -1,0 +1,13 @@
+<map id="com.github.mgrl39.hashscout.MainController" name="com.github.mgrl39.hashscout.MainController">
+<area shape="rect" id="Node000001" title="Controlador principal que gestiona la interfície d&#39;usuari i la lògica de l&#39;aplicació" alt="" coords="685,61,904,101"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1Logger.html" title="Sistema de logging que implementa registre concurrent i formatat." alt="" coords="5,39,224,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,34,317,24,414,18,491,18,566,27,662,45,719,59,718,64,661,51,565,32,490,24,415,23,318,29,235,39"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileSearcher.html" title="Cercador de text que implementa cerca concurrent i eficient." alt="" coords="317,39,536,79"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="238,56,317,56,317,61,238,61"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileOrganizer.html" title="Organitzador de fitxers que demostra l&#39;ús avançat de característiques Java modernes." alt="" coords="317,103,536,143"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="227,79,329,100,328,105,226,84"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1HashGenerator.html" title="Generador de hashes que implementa múltiples algorismes de manera segura i eficient." alt="" coords="317,167,536,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="529,161,661,125,739,99,741,104,662,131,530,166"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="550,64,685,72,685,77,549,69"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="549,106,685,91,685,96,550,112"/>
+</map>

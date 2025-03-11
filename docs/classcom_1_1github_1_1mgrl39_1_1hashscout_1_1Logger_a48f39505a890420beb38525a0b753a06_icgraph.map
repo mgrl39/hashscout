@@ -1,0 +1,22 @@
+<map id="com.github.mgrl39.hashscout.Logger.log" name="com.github.mgrl39.hashscout.Logger.log">
+<area shape="rect" id="Node000001" title="Registra un missatge amb timestamp al terminal." alt="" coords="564,220,783,260"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#a5bd6dc8b4937f3866bfe96c45b5b56ce" title="Inicialitza el controlador i configura els components." alt="" coords="288,5,507,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="651,209,627,174,596,133,558,93,515,60,492,48,494,43,517,55,561,89,600,130,632,171,655,206"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#abae677dbde84ef92959dc911b839f830" title=" " alt="" coords="282,69,513,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="637,213,581,171,515,130,470,112,472,107,517,126,584,167,640,209"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ab2de237906a855734ff383e835514ed6" title=" " alt="" coords="5,267,231,307"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="624,216,573,193,515,175,449,161,396,154,344,158,280,175,238,193,199,218,140,268,137,264,196,214,235,188,278,169,343,153,396,149,450,156,517,169,575,188,627,211"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#a8b8be65360d2e212221259c69954be33" title="Gestiona la selecció de fitxers." alt="" coords="288,184,507,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="550,227,506,221,507,216,551,221"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ad292ed9cb2218423ec379c29eb246602" title=" " alt="" coords="279,249,516,303"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="551,259,517,263,516,258,550,253"/>
+<area shape="rect" id="Node000007" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#a74d02d83b5412ccf97a5ac4ea357b84a" title=" " alt="" coords="279,327,516,382"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="623,268,517,317,484,330,482,325,515,312,620,264"/>
+<area shape="rect" id="Node000008" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileOrganizer.html#a0a3d0d78c8b81a655650d47f5e99be94" title="Organitza els fitxers d&#39;una carpeta en categories." alt="" coords="288,407,507,447"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="650,273,594,335,558,368,517,396,489,409,487,404,515,391,554,364,590,331,646,269"/>
+<area shape="rect" id="Node000009" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileSearcher.html#ab12c3a2c21ac02c2d1d297b4117c212c" title="Cerca text en fitxers de manera concurrent." alt="" coords="288,471,507,511"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="660,274,638,317,606,367,566,418,518,461,496,473,493,468,514,456,562,414,602,364,633,314,655,272"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="299,404,277,396,202,352,143,309,146,305,205,348,280,391,301,400"/>
+<area shape="rect" id="Node000010" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ad9c0486da5b0d8c5cde40ecc74661e42" title=" " alt="" coords="9,471,227,511"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="274,493,227,493,227,488,274,488"/>
+</map>

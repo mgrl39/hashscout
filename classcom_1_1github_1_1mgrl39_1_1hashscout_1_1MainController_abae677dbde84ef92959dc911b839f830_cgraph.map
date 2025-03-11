@@ -1,0 +1,13 @@
+<map id="com.github.mgrl39.hashscout.MainController.onGenerateHash" name="com.github.mgrl39.hashscout.MainController.onGenerateHash">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,101,236,141"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1HashGenerator.html#a09fe137afa48ef56aaed90df1247c587" title="Genera hash de manera asíncrona amb indicador de progrés." alt="" coords="284,37,584,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,99,322,77,323,83,220,104"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1Logger.html#a48f39505a890420beb38525a0b753a06" title="Registra un missatge amb timestamp al terminal." alt="" coords="325,101,543,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="236,119,311,119,311,124,236,124"/>
+<area shape="rect" id="Node000006" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ae3f9233f9bdaad16347e575349e89ee5" title=" " alt="" coords="325,165,543,205"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="220,139,323,160,322,165,219,144"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1HashGenerator.html#aa3a900e3c255feeb4b9c4c977ad92938" title="Genera el hash d&#39;un fitxer utilitzant l&#39;algorisme especificat." alt="" coords="635,5,854,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="584,39,621,35,622,41,585,45"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1ProgressUtils.html#abaddd08b83491aea5656d22827a8256e" title="Simula el progrés d&#39;una operació de manera suau." alt="" coords="632,69,857,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="585,70,619,74,618,79,584,75"/>
+</map>

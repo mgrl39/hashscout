@@ -1,0 +1,12 @@
+<map id="com.github.mgrl39.hashscout.MainController.onOrganizeFiles" name="com.github.mgrl39.hashscout.MainController.onOrganizeFiles">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,63,231,103"/>
+<area shape="rect" id="Node000002" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1Logger.html#a48f39505a890420beb38525a0b753a06" title="Registra un missatge amb timestamp al terminal." alt="" coords="549,5,767,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,60,278,48,411,34,535,27,535,32,411,40,279,53,209,65"/>
+<area shape="rect" id="Node000003" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1FileOrganizer.html#a0a3d0d78c8b81a655650d47f5e99be94" title="Organitza els fitxers d&#39;una carpeta en categories." alt="" coords="279,63,497,103"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,80,265,80,265,85,231,85"/>
+<area shape="rect" id="Node000005" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1MainController.html#ae3f9233f9bdaad16347e575349e89ee5" title=" " alt="" coords="279,127,497,167"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="204,100,290,121,289,126,203,105"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="482,60,549,46,550,51,483,65"/>
+<area shape="rect" id="Node000004" href="$classcom_1_1github_1_1mgrl39_1_1hashscout_1_1ProgressUtils.html#abaddd08b83491aea5656d22827a8256e" title="Simula el progrés d&#39;una operació de manera suau." alt="" coords="545,69,771,109"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="498,83,531,84,531,89,498,88"/>
+</map>
