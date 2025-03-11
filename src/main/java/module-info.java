@@ -1,7 +1,7 @@
 module com.github.mgrl39.hashscout {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires javafx.web;
+    requires transitive javafx.controls;
+    requires transitive javafx.fxml;
+    requires transitive javafx.graphics;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;

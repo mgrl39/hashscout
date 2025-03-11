@@ -132,8 +132,8 @@ public class MainController {
         fileSearcher.searchText(
                 selectedSearchFolder.toPath(),
                 searchTerm,
-                searchResultArea,
-                searchProgressBar
+                text -> searchResultArea.appendText(text),
+                progress -> searchProgressBar.setProgress(progress)
         );
     }
 

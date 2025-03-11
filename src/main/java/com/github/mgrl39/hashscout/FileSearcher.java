@@ -1,14 +1,13 @@
 package com.github.mgrl39.hashscout;
 
 import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,10 +19,10 @@ public class FileSearcher {
         this.logger = logger;
     }
 
-    public void searchText(Path folder, String searchTerm, TextArea resultArea, ProgressBar progressBar) {
+    public void searchText(Path folder, String searchTerm, Consumer<String> resultConsumer, Consumer<Double> progressConsumer) {
         AtomicBoolean searchCompleted = new AtomicBoolean(false);
 
-        Thread progressThread = new Thread(() -> simulateProgress(progressBar, searchCompleted));
+        Thread progressThread = new Thread(() -> simulateProgress(progressConsumer, searchCompleted));
         progressThread.setDaemon(true);
         progressThread.start();
 
@@ -50,7 +49,8 @@ public class FileSearcher {
 
                     if (foundMatch) {
                         matchingFiles++;
-                        Platform.runLater(() -> resultArea.appendText(fileResults.toString()));
+                        final String results = fileResults.toString();
+                        Platform.runLater(() -> resultConsumer.accept(results));
                     }
                 }
 
@@ -63,16 +63,16 @@ public class FileSearcher {
         }).start();
     }
 
-    private void simulateProgress(ProgressBar progressBar, AtomicBoolean completed) {
+    private void simulateProgress(Consumer<Double> progressConsumer, AtomicBoolean completed) {
         try {
             double progress = 0;
             while (!completed.get() && progress < 1.0) {
                 progress += 0.05;
                 final double currentProgress = progress;
-                Platform.runLater(() -> progressBar.setProgress(currentProgress));
+                Platform.runLater(() -> progressConsumer.accept(currentProgress));
                 Thread.sleep(100);
             }
-            Platform.runLater(() -> progressBar.setProgress(1.0));
+            Platform.runLater(() -> progressConsumer.accept(1.0));
         } catch (InterruptedException ignored) {}
     }
 }
