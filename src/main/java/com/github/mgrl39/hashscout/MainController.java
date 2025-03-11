@@ -76,8 +76,7 @@ public class MainController {
         hashTypeComboBox.getItems().addAll(
             "MD5",
             "SHA-1",
-            "SHA-256",
-            "SHA-512"
+            "SHA-256"
         );
         hashTypeComboBox.setValue("SHA-256"); // Selecció per defecte
         
@@ -87,8 +86,8 @@ public class MainController {
         organizeProgressBar.setProgress(0);
         
         // Inicializar etiquetas de selección
-        selectedFileLabel.setText("Ninguno");
-        selectedSearchFolderLabel.setText("Ninguna");
+        selectedFileLabel.setText("Cap fitxer seleccionat");
+        selectedSearchFolderLabel.setText("Cap carpeta seleccionada");
     }
 
     private void appendLog(String message) {
@@ -264,45 +263,73 @@ public class MainController {
             // Realizar la búsqueda
             final int[] totalFiles = {0};
             final int[] matchingFiles = {0};
+            final int[] processedFiles = {0};
+            final int MAX_FILES = 100;
             
             Platform.runLater(() -> {
                 try {
-                    Files.walk(folder.toPath())
-                        .filter(Files::isRegularFile)
-                        .forEach(file -> {
-                            totalFiles[0]++;
-                            try {
-                                List<String> lines = Files.readAllLines(file);
-                                boolean fileHasMatch = false;
-                                StringBuilder fileResults = new StringBuilder();
-                                
-                                for (int i = 0; i < lines.size(); i++) {
-                                    String line = lines.get(i);
-                                    if (line.contains(searchTerm)) {
-                                        if (!fileHasMatch) {
-                                            fileResults.append("📄 ").append(file.getFileName()).append(":\n");
-                                            fileHasMatch = true;
-                                        }
-                                        // Añadir número de línea y contexto
-                                        fileResults.append("   Línia ").append(i + 1).append(": ")
-                                                 .append(line.trim()).append("\n");
+                    // Verificar si el término de búsqueda es muy corto
+                    if (searchTerm.length() < 3) {
+                        appendLog("⚠️ Advertència: Cercar termes curts pot generar molts resultats.");
+                    }
+                    
+                    // Recoger todos los archivos a procesar primero (limitados a MAX_FILES)
+                    List<Path> filesToProcess;
+                    try (Stream<Path> fileStream = Files.walk(folder.toPath())
+                            .filter(Files::isRegularFile)
+                            .limit(MAX_FILES)) {
+                        filesToProcess = fileStream.collect(Collectors.toList());
+                    }
+                    
+                    totalFiles[0] = filesToProcess.size();
+                    appendLog("S'analitzaran " + totalFiles[0] + " fitxers (límit màxim: " + MAX_FILES + ")");
+                    
+                    // Si se alcanzó el límite, mostrar un aviso
+                    if (totalFiles[0] >= MAX_FILES) {
+                        appendLog("⚠️ S'ha assolit el límit de fitxers (" + MAX_FILES + "). Alguns fitxers no es processaran.");
+                    }
+                    
+                    // Procesar los archivos recogidos
+                    for (Path file : filesToProcess) {
+                        processedFiles[0]++;
+                        try {
+                            List<String> lines = Files.readAllLines(file);
+                            boolean fileHasMatch = false;
+                            StringBuilder fileResults = new StringBuilder();
+                            
+                            for (int i = 0; i < lines.size(); i++) {
+                                String line = lines.get(i);
+                                if (line.contains(searchTerm)) {
+                                    if (!fileHasMatch) {
+                                        fileResults.append("📄 ").append(file.getFileName()).append(":\n");
+                                        fileHasMatch = true;
                                     }
+                                    // Añadir número de línea y contexto
+                                    fileResults.append("   Línia ").append(i + 1).append(": ")
+                                             .append(line.trim()).append("\n");
                                 }
-                                
-                                if (fileHasMatch) {
-                                    matchingFiles[0]++;
-                                    Platform.runLater(() -> {
-                                        searchResultArea.appendText(fileResults.toString() + "\n");
-                                    });
-                                }
-                            } catch (IOException e) {
-                                appendLog("Error llegint el fitxer: " + file.getFileName());
                             }
-                        });
+                            
+                            if (fileHasMatch) {
+                                matchingFiles[0]++;
+                                Platform.runLater(() -> {
+                                    searchResultArea.appendText(fileResults.toString() + "\n");
+                                });
+                            }
+                        } catch (IOException e) {
+                            appendLog("Error llegint el fitxer: " + file.getFileName());
+                        }
+                    }
                     
                     Platform.runLater(() -> {
-                        String summary = String.format("Cerca completada: %d coincidències trobades en %d de %d fitxers",
-                                matchingFiles[0], matchingFiles[0], totalFiles[0]);
+                        String summary;
+                        if (totalFiles[0] >= MAX_FILES) {
+                            summary = String.format("Cerca completada (limitat a %d fitxers): %d coincidències trobades en %d fitxers",
+                                    MAX_FILES, matchingFiles[0], matchingFiles[0]);
+                        } else {
+                            summary = String.format("Cerca completada: %d coincidències trobades en %d de %d fitxers",
+                                    matchingFiles[0], matchingFiles[0], totalFiles[0]);
+                        }
                         appendLog(summary);
                         statusLabel.setText(summary);
                         
