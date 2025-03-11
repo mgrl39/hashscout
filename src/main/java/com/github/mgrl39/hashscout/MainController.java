@@ -1,43 +1,28 @@
 package com.github.mgrl39.hashscout;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.application.Platform;
-import javafx.scene.layout.VBox;
-import org.kordamp.bootstrapfx.BootstrapFX;
+import javafx.stage.DirectoryChooser;
+import javafx.scene.control.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.*;
-import java.security.MessageDigest;
-import java.util.HexFormat;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.lang.StringBuilder;
 
 public class MainController {
 
     @FXML
     private Label statusLabel;
-    
+
     @FXML
     private TextArea logTerminal;
-    
-    @FXML
-    private TextField searchTextField;
 
     @FXML
     private TextArea hashResultArea;
 
     @FXML
     private TextArea searchResultArea;
+
+    @FXML
+    private TextField searchTextField;
 
     @FXML
     private ComboBox<String> hashTypeComboBox;
@@ -57,55 +42,30 @@ public class MainController {
     @FXML
     private Label selectedSearchFolderLabel;
 
+    private Logger logger;
+    private HashGenerator hashGenerator;
+    private FileSearcher fileSearcher;
+    private FileOrganizer fileOrganizer;
+    private File selectedFile;
+    private File selectedSearchFolder;
+
     @FXML
     public void initialize() {
-        // Configurar l'estil del terminal
-        logTerminal.setStyle(
-            "-fx-font-family: 'Consolas', 'Monaco', monospace;" +
-            "-fx-font-size: 12px;" +
-            "-fx-background-color: #2b2b2b;" +
-            "-fx-text-fill: #a9b7c6;"
-        );
-        logTerminal.setWrapText(true);
-        logTerminal.setEditable(false);
-        
-        // Missatge inicial
-        appendLog("HashScout inicialitzat. Preparat per a operacions.");
-        
-        // Inicialitzar tipus de hash
-        hashTypeComboBox.getItems().addAll(
-            "MD5",
-            "SHA-1",
-            "SHA-256"
-        );
-        hashTypeComboBox.setValue("SHA-256"); // Selecció per defecte
-        
-        // Inicializar barras de progreso
+        // Inicializar Logger
+        logger = new Logger(logTerminal);
+        hashGenerator = new HashGenerator();
+        fileSearcher = new FileSearcher(logger);
+        fileOrganizer = new FileOrganizer(logger);
+
+        logger.log("🔵 HashScout inicialitzat");
+
+        hashTypeComboBox.getItems().addAll("MD5", "SHA-1", "SHA-256");
+        hashTypeComboBox.setValue("SHA-256");
+
         hashProgressBar.setProgress(0);
         searchProgressBar.setProgress(0);
         organizeProgressBar.setProgress(0);
-        
-        // Inicializar etiquetas de selección
-        selectedFileLabel.setText("Cap fitxer seleccionat");
-        selectedSearchFolderLabel.setText("Cap carpeta seleccionada");
     }
-
-    private void appendLog(String message) {
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-        Platform.runLater(() -> {
-            logTerminal.appendText(String.format("[%s] %s%n", timestamp, message));
-            logTerminal.setScrollTop(Double.MAX_VALUE); // Auto-scroll to bottom
-        });
-    }
-
-    // Definir una clase de excepción personalizada
-    private class NoFileSelectedException extends Exception {
-        public NoFileSelectedException(String message) {
-            super(message);
-        }
-    }
-
-    private File selectedFile = null;
 
     @FXML
     protected void onSelectFile() {
@@ -115,94 +75,28 @@ public class MainController {
 
         if (file != null) {
             selectedFile = file;
-            // Actualizar la etiqueta con el nombre del archivo seleccionado
             selectedFileLabel.setText(file.getName());
-            appendLog("Fitxer seleccionat: " + file.getName());
+            logger.log("📂 Fitxer seleccionat: " + file.getName());
         }
     }
 
     @FXML
     protected void onGenerateHash() {
+        if (selectedFile == null) {
+            showWarning("Selecciona un fitxer abans de generar el hash.");
+            return;
+        }
+
+        String algorithm = hashTypeComboBox.getValue();
         try {
-            // Resetear barra de progreso
-            Platform.runLater(() -> hashProgressBar.setProgress(0));
-            
-            if (hashTypeComboBox.getValue() == null) {
-                throw new NoFileSelectedException("No s'ha seleccionat cap tipus de hash");
-            }
-
-            if (selectedFile == null) {
-                throw new NoFileSelectedException("No s'ha seleccionat cap fitxer");
-            }
-
-            appendLog("Generant hash " + hashTypeComboBox.getValue() + " per a: " + selectedFile.getName());
-            
-            // Mostrar progreso simulado
-            final boolean[] operationCompleted = {false};
-            Thread progressThread = new Thread(() -> {
-                try {
-                    double progress = 0.0;
-                    while (!operationCompleted[0] && progress < 0.9) {
-                        progress += 0.1;
-                        final double currentProgress = progress;
-                        Platform.runLater(() -> hashProgressBar.setProgress(currentProgress));
-                        Thread.sleep(100);
-                    }
-                    // Asegurarse de que llegue al 100% cuando la operación termine
-                    while (!operationCompleted[0]) {
-                        Thread.sleep(50);
-                    }
-                    Platform.runLater(() -> hashProgressBar.setProgress(1.0));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            });
-            progressThread.setDaemon(true);
-            progressThread.start();
-            
-            String hash = generateHash(selectedFile, hashTypeComboBox.getValue());
-            hashResultArea.setText(hashTypeComboBox.getValue() + ": " + hash);
-            appendLog("Hash generat amb èxit: " + hash);
-            
-            // Marcar la operación como completada para actualizar la barra
-            operationCompleted[0] = true;
-            // Asegurarnos de que la barra llegue al 100%
-            Platform.runLater(() -> hashProgressBar.setProgress(1.0));
-            
-        } catch (NoFileSelectedException e) {
-            // Mostrar un diálogo de alerta
-            Platform.runLater(() -> hashProgressBar.setProgress(0));
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Advertència");
-            alert.setHeaderText("Error en la generació de hash");
-            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
-            alert.showAndWait();
-            
-            appendLog("EXCEPCIÓ: " + e.getMessage());
-            statusLabel.setText("Error: " + e.getMessage());
+            String hash = hashGenerator.generateHash(selectedFile, algorithm);
+            hashResultArea.setText(algorithm + ": " + hash);
+            logger.log("✔️ Hash generat amb èxit: " + hash);
         } catch (Exception e) {
-            Platform.runLater(() -> hashProgressBar.setProgress(0));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error en la generació de hash");
-            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
-            alert.showAndWait();
-            
-            String errorMsg = "Error generant hash: " + e.getMessage();
-            statusLabel.setText(errorMsg);
-            appendLog("EXCEPCIÓ: " + errorMsg);
+            logger.log("❌ Error generant hash: " + e.getMessage());
+            showError("Error generant hash", e.getMessage());
         }
     }
-
-    private String generateHash(File file, String algorithm) throws Exception {
-        MessageDigest digest = MessageDigest.getInstance(algorithm);
-        byte[] bytes = Files.readAllBytes(file.toPath());
-        byte[] hash = digest.digest(bytes);
-        return HexFormat.of().formatHex(hash);
-    }
-
-    // Variables para almacenar selecciones
-    private File selectedSearchFolder = null;
 
     @FXML
     protected void onSelectFolderForSearch() {
@@ -210,297 +104,64 @@ public class MainController {
         directoryChooser.setTitle("Selecciona una carpeta");
         File folder = directoryChooser.showDialog(statusLabel.getScene().getWindow());
 
-        if (folder != null && folder.isDirectory()) {
+        if (folder != null) {
             selectedSearchFolder = folder;
-            // Actualizar la etiqueta con la ruta de la carpeta seleccionada
             selectedSearchFolderLabel.setText(folder.getPath());
-            appendLog("Carpeta seleccionada per a cerca: " + folder.getPath());
+            logger.log("📁 Carpeta seleccionada per a cerca: " + folder.getPath());
         }
     }
 
     @FXML
     protected void onSearchText() {
-        try {
-            // Resetear barra de progreso
-            Platform.runLater(() -> searchProgressBar.setProgress(0));
-            
-            if (searchTextField.getText().isEmpty()) {
-                throw new NoFileSelectedException("No s'ha introduït cap text de cerca");
-            }
-
-            if (selectedSearchFolder == null) {
-                throw new NoFileSelectedException("No s'ha seleccionat cap carpeta");
-            }
-
-            String searchTerm = searchTextField.getText();
-            File folder = selectedSearchFolder;
-            searchResultArea.clear();
-            
-            appendLog("Cercant \"" + searchTerm + "\" a: " + folder.getPath());
-            
-            // Mostrar progreso simulado
-            final boolean[] searchCompleted = {false};
-            Thread progressThread = new Thread(() -> {
-                try {
-                    double progress = 0.0;
-                    while (!searchCompleted[0] && progress < 0.9) {
-                        progress += 0.05;
-                        final double currentProgress = progress;
-                        Platform.runLater(() -> searchProgressBar.setProgress(currentProgress));
-                        Thread.sleep(100);
-                    }
-                    while (!searchCompleted[0]) {
-                        Thread.sleep(50);
-                    }
-                    Platform.runLater(() -> searchProgressBar.setProgress(1.0));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            });
-            progressThread.setDaemon(true);
-            progressThread.start();
-            
-            // Realizar la búsqueda
-            final int[] totalFiles = {0};
-            final int[] matchingFiles = {0};
-            final int[] processedFiles = {0};
-            final int MAX_FILES = 100;
-            
-            Platform.runLater(() -> {
-                try {
-                    // Verificar si el término de búsqueda es muy corto
-                    if (searchTerm.length() < 3) {
-                        appendLog("⚠️ Advertència: Cercar termes curts pot generar molts resultats.");
-                    }
-                    
-                    // Recoger todos los archivos a procesar primero (limitados a MAX_FILES)
-                    List<Path> filesToProcess;
-                    try (Stream<Path> fileStream = Files.walk(folder.toPath())
-                            .filter(Files::isRegularFile)
-                            .limit(MAX_FILES)) {
-                        filesToProcess = fileStream.collect(Collectors.toList());
-                    }
-                    
-                    totalFiles[0] = filesToProcess.size();
-                    appendLog("S'analitzaran " + totalFiles[0] + " fitxers (límit màxim: " + MAX_FILES + ")");
-                    
-                    // Si se alcanzó el límite, mostrar un aviso
-                    if (totalFiles[0] >= MAX_FILES) {
-                        appendLog("⚠️ S'ha assolit el límit de fitxers (" + MAX_FILES + "). Alguns fitxers no es processaran.");
-                    }
-                    
-                    // Procesar los archivos recogidos
-                    for (Path file : filesToProcess) {
-                        processedFiles[0]++;
-                        try {
-                            List<String> lines = Files.readAllLines(file);
-                            boolean fileHasMatch = false;
-                            StringBuilder fileResults = new StringBuilder();
-                            
-                            for (int i = 0; i < lines.size(); i++) {
-                                String line = lines.get(i);
-                                if (line.contains(searchTerm)) {
-                                    if (!fileHasMatch) {
-                                        fileResults.append("📄 ").append(file.getFileName()).append(":\n");
-                                        fileHasMatch = true;
-                                    }
-                                    // Añadir número de línea y contexto
-                                    fileResults.append("   Línia ").append(i + 1).append(": ")
-                                             .append(line.trim()).append("\n");
-                                }
-                            }
-                            
-                            if (fileHasMatch) {
-                                matchingFiles[0]++;
-                                Platform.runLater(() -> {
-                                    searchResultArea.appendText(fileResults.toString() + "\n");
-                                });
-                            }
-                        } catch (IOException e) {
-                            appendLog("Error llegint el fitxer: " + file.getFileName());
-                        }
-                    }
-                    
-                    Platform.runLater(() -> {
-                        String summary;
-                        if (totalFiles[0] >= MAX_FILES) {
-                            summary = String.format("Cerca completada (limitat a %d fitxers): %d coincidències trobades en %d fitxers",
-                                    MAX_FILES, matchingFiles[0], matchingFiles[0]);
-                        } else {
-                            summary = String.format("Cerca completada: %d coincidències trobades en %d de %d fitxers",
-                                    matchingFiles[0], matchingFiles[0], totalFiles[0]);
-                        }
-                        appendLog(summary);
-                        statusLabel.setText(summary);
-                        
-                        if (matchingFiles[0] == 0) {
-                            searchResultArea.setText("No s'han trobat coincidències per a \"" + searchTerm + "\"");
-                        }
-                    });
-                    
-                } catch (IOException e) {
-                    Platform.runLater(() -> {
-                        appendLog("Error en la cerca: " + e.getMessage());
-                        statusLabel.setText("Error en la cerca: " + e.getMessage());
-                    });
-                } finally {
-                    searchCompleted[0] = true;
-                }
-            });
-            
-        } catch (NoFileSelectedException e) {
-            Platform.runLater(() -> searchProgressBar.setProgress(0));
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Advertència");
-            alert.setHeaderText("Error en la cerca");
-            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
-            alert.showAndWait();
-            
-            appendLog("EXCEPCIÓ: " + e.getMessage());
-            statusLabel.setText("Error: " + e.getMessage());
-        } catch (Exception e) {
-            Platform.runLater(() -> searchProgressBar.setProgress(0));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error en la cerca");
-            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
-            alert.showAndWait();
-            
-            String errorMsg = "Error en la cerca: " + e.getMessage();
-            statusLabel.setText(errorMsg);
-            appendLog("EXCEPCIÓ: " + errorMsg);
+        if (selectedSearchFolder == null) {
+            showWarning("Selecciona una carpeta abans de cercar.");
+            return;
         }
+
+        String searchTerm = searchTextField.getText();
+        if (searchTerm.isEmpty()) {
+            showWarning("Introdueix un text de cerca.");
+            return;
+        }
+
+        searchResultArea.clear();
+        fileSearcher.searchText(
+                selectedSearchFolder.toPath(),
+                searchTerm,
+                searchResultArea,
+                searchProgressBar
+        );
     }
 
     @FXML
     protected void onOrganizeFiles() {
-        try {
-            // Resetear barra de progreso
-            Platform.runLater(() -> organizeProgressBar.setProgress(0));
-            
-            DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setTitle("Selecciona una carpeta");
-            File folder = directoryChooser.showDialog(statusLabel.getScene().getWindow());
-
-            if (folder == null || !folder.isDirectory()) {
-                throw new NoFileSelectedException("No s'ha seleccionat cap carpeta per organitzar");
-            }
-
-            appendLog("🔍 Iniciant organització de fitxers a: " + folder.getPath());
-            appendLog("----------------------------------------");
-
-            // Mostrar progreso simulado
-            final boolean[] organizeCompleted = {false};
-            Thread progressThread = new Thread(() -> {
-                try {
-                    double progress = 0.0;
-                    while (!organizeCompleted[0] && progress < 0.9) {
-                        progress += 0.1;
-                        final double currentProgress = progress;
-                        Platform.runLater(() -> organizeProgressBar.setProgress(currentProgress));
-                        Thread.sleep(100);
-                    }
-                    // Asegurarse de que llegue al 100% cuando la operación termine
-                    while (!organizeCompleted[0]) {
-                        Thread.sleep(50);
-                    }
-                    Platform.runLater(() -> organizeProgressBar.setProgress(1.0));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            });
-            progressThread.setDaemon(true);
-            progressThread.start();
-
-            try (Stream<Path> files = Files.list(folder.toPath())) {
-                Map<String, Integer> categoryCount = new HashMap<>();
-
-                files.forEach(file -> {
-                    if (Files.isRegularFile(file)) {
-                        try {
-                            String extension = getExtension(file.getFileName().toString());
-                            String category = getCategoryForExtension(extension);
-                            Path targetDir = folder.toPath().resolve(category);
-
-                            categoryCount.merge(category, 1, Integer::sum);
-
-                            appendLog("📄 Processant: " + file.getFileName());
-                            appendLog("   └─ Categoria: " + category + " (" + extension + ")");
-
-                            Files.createDirectories(targetDir);
-                            Files.move(file, targetDir.resolve(file.getFileName()), StandardCopyOption.REPLACE_EXISTING);
-
-                            appendLog("   └─ ✅ Mogut a: " + targetDir.getFileName());
-                        } catch (IOException e) {
-                            String errorMsg = "Error movent fitxer " + file + ": " + e.getMessage();
-                            statusLabel.setText(errorMsg);
-                            appendLog("   └─ ❌ ERROR: " + errorMsg);
-                        }
-                    }
-                });
-
-                appendLog("----------------------------------------");
-                appendLog("📊 Resum de l'organització:");
-                categoryCount.forEach((category, count) ->
-                    appendLog("   " + category + ": " + count + " fitxers"));
-                appendLog("----------------------------------------");
-
-                String summary = categoryCount.entrySet().stream()
-                    .map(e -> e.getKey() + ": " + e.getValue())
-                    .collect(Collectors.joining(", "));
-                statusLabel.setText("Fitxers organitzats amb èxit! " + summary);
-            }
-            
-            // Marcar la organización como completada
-            organizeCompleted[0] = true;
-            // Asegurarnos de que la barra llegue al 100%
-            Platform.runLater(() -> organizeProgressBar.setProgress(1.0));
-            
-        } catch (NoFileSelectedException e) {
-            Platform.runLater(() -> organizeProgressBar.setProgress(0));
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Advertència");
-            alert.setHeaderText("Error en l'organització");
-            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
-            alert.showAndWait();
-            
-            appendLog("EXCEPCIÓ: " + e.getMessage());
-            statusLabel.setText("Error: " + e.getMessage());
-        } catch (Exception e) {
-            Platform.runLater(() -> organizeProgressBar.setProgress(0));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error en l'organització");
-            alert.setContentText("EXCEPCIÓ: " + e.getMessage());
-            alert.showAndWait();
-            
-            String errorMsg = "Error organitzant fitxers: " + e.getMessage();
-            statusLabel.setText(errorMsg);
-            appendLog("EXCEPCIÓ: " + errorMsg);
+        if (selectedSearchFolder == null) {
+            showWarning("Selecciona una carpeta abans d'organitzar.");
+            return;
         }
+
+        fileOrganizer.organizeFiles(selectedSearchFolder.toPath());
     }
 
-    private String getCategoryForExtension(String extension) {
-        extension = extension.toLowerCase();
-        if (extension.matches("zip|rar|7z|tar|gz|bz2")) return "comprimits";
-        if (extension.matches("jpg|jpeg|png|gif|bmp|webp|svg")) return "imatges";
-        if (extension.matches("mp3|wav|ogg|m4a|flac")) return "audio";
-        if (extension.matches("mp4|avi|mkv|mov|wmv")) return "video";
-        if (extension.matches("doc|docx|pdf|txt|rtf|odt")) return "documents";
-        if (extension.matches("exe|msi|deb|rpm|appimage")) return "executables";
-        if (extension.matches("js|ts|java|py|cpp|cs|php|html|css")) return "codi";
-        if (extension.matches("json|xml|yaml|yml|ini|conf")) return "config";
-        return "altres";
+    private void showWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertència");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    private String getExtension(String fileName) {
-        int lastIndex = fileName.lastIndexOf(".");
-        return lastIndex == -1 ? "No_Extension" : fileName.substring(lastIndex + 1);
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
     protected void handleExit() {
-        Platform.exit();
+        System.exit(0);
     }
 
     @FXML
@@ -508,7 +169,7 @@ public class MainController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Sobre HashScout");
         alert.setHeaderText("HashScout v1.0");
-        alert.setContentText("Una eina de gestió de fitxers.\nDesenvolupat per mgrl39 amb JavaFX");
+        alert.setContentText("Una eina de gestió de fitxers desenvolupada per mgrl39 amb JavaFX.");
         alert.showAndWait();
     }
 }
