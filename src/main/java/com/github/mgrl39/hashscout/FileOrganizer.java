@@ -22,7 +22,7 @@ public class FileOrganizer {
     public void organizeFiles(Path folder, Consumer<Double> progressConsumer) {
         AtomicBoolean completed = new AtomicBoolean(false);
         
-        Thread progressThread = new Thread(() -> simulateProgress(progressConsumer, completed));
+        Thread progressThread = new Thread(() -> ProgressUtils.simulateProgress(progressConsumer, completed));
         progressThread.setDaemon(true);
         progressThread.start();
         
@@ -56,19 +56,6 @@ public class FileOrganizer {
                 completed.set(true);
             }
         }).start();
-    }
-
-    private void simulateProgress(Consumer<Double> progressConsumer, AtomicBoolean completed) {
-        try {
-            double progress = 0;
-            while (!completed.get() && progress < 1.0) {
-                progress += 0.05;
-                final double currentProgress = progress;
-                Platform.runLater(() -> progressConsumer.accept(currentProgress));
-                Thread.sleep(100);
-            }
-            Platform.runLater(() -> progressConsumer.accept(1.0));
-        } catch (InterruptedException ignored) {}
     }
 
     private String getExtension(String fileName) {

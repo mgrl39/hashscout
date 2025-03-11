@@ -22,7 +22,7 @@ public class FileSearcher {
     public void searchText(Path folder, String searchTerm, Consumer<String> resultConsumer, Consumer<Double> progressConsumer) {
         AtomicBoolean searchCompleted = new AtomicBoolean(false);
 
-        Thread progressThread = new Thread(() -> simulateProgress(progressConsumer, searchCompleted));
+        Thread progressThread = new Thread(() -> ProgressUtils.simulateProgress(progressConsumer, searchCompleted));
         progressThread.setDaemon(true);
         progressThread.start();
 
@@ -61,18 +61,5 @@ public class FileSearcher {
                 searchCompleted.set(true);
             }
         }).start();
-    }
-
-    private void simulateProgress(Consumer<Double> progressConsumer, AtomicBoolean completed) {
-        try {
-            double progress = 0;
-            while (!completed.get() && progress < 1.0) {
-                progress += 0.05;
-                final double currentProgress = progress;
-                Platform.runLater(() -> progressConsumer.accept(currentProgress));
-                Thread.sleep(100);
-            }
-            Platform.runLater(() -> progressConsumer.accept(1.0));
-        } catch (InterruptedException ignored) {}
     }
 }

@@ -9,6 +9,8 @@ import java.util.HexFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
+import com.github.mgrl39.hashscout.utils.ProgressUtils;
+
 public class HashGenerator {
 
     public String generateHash(File file, String algorithm) throws Exception {
@@ -21,7 +23,7 @@ public class HashGenerator {
     public void generateHashWithProgress(File file, String algorithm, Consumer<String> resultConsumer, Consumer<Double> progressConsumer) {
         AtomicBoolean completed = new AtomicBoolean(false);
         
-        Thread progressThread = new Thread(() -> simulateProgress(progressConsumer, completed));
+        Thread progressThread = new Thread(() -> ProgressUtils.simulateProgress(progressConsumer, completed));
         progressThread.setDaemon(true);
         progressThread.start();
         
@@ -36,18 +38,5 @@ public class HashGenerator {
                 completed.set(true);
             }
         }).start();
-    }
-    
-    private void simulateProgress(Consumer<Double> progressConsumer, AtomicBoolean completed) {
-        try {
-            double progress = 0;
-            while (!completed.get() && progress < 1.0) {
-                progress += 0.05;
-                final double currentProgress = progress;
-                Platform.runLater(() -> progressConsumer.accept(currentProgress));
-                Thread.sleep(100);
-            }
-            Platform.runLater(() -> progressConsumer.accept(1.0));
-        } catch (InterruptedException ignored) {}
     }
 }
