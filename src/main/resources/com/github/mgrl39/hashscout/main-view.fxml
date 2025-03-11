@@ -11,7 +11,6 @@
             prefHeight="700"
             styleClass="border-pane">
 
-    <!-- Menú Superior -->
     <top>
         <MenuBar styleClass="menu-bar">
             <Menu text="Archivo" styleClass="menu">
@@ -23,7 +22,6 @@
         </MenuBar>
     </top>
 
-    <!-- Contenido Principal -->
     <center>
         <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane" VBox.vgrow="ALWAYS">
             <Tab text="Hash Generator">
@@ -39,7 +37,7 @@
                                 onAction="#onGenerateHash"
                                 styleClass="btn btn-primary"/>
                     </HBox>
-                    <!-- Indicador de archivo seleccionado -->
+
                     <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
                         <Label text="Arxiu seleccionat:" styleClass="label-header"/>
                         <Label fx:id="selectedFileLabel" text="Cap fitxer seleccionat" styleClass="label-value"/>
@@ -51,7 +49,7 @@
                                  prefRowCount="5"
                                  styleClass="text-area"/>
                     </TitledPane>
-                    <!-- Barra de progreso para Hash Generator -->
+
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <Label text="Progrés:" styleClass="label"/>
                         <ProgressBar fx:id="hashProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
@@ -73,7 +71,7 @@
                                 onAction="#onSearchText"
                                 styleClass="btn btn-success"/>
                     </HBox>
-                    <!-- Indicador de carpeta seleccionada -->
+
                     <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
                         <Label text="Carpeta seleccionada:" styleClass="label-header"/>
                         <Label fx:id="selectedSearchFolderLabel" text="Cap carpeta seleccionada" styleClass="label-value"/>
@@ -85,7 +83,8 @@
                                  prefRowCount="15"
                                  styleClass="text-area"/>
                     </TitledPane>
-                    <!-- Barra de progreso para File Search -->
+
+
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <Label text="Progrés:" styleClass="label"/>
                         <ProgressBar fx:id="searchProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
@@ -95,7 +94,8 @@
 
 <Tab text="File Organizer">
     <VBox spacing="15" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
-        <!-- Nueva fila con dos botones -->
+
+
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Button text="Select Folder" 
                     onAction="#onSelectFolderForOrganization"
@@ -104,7 +104,8 @@
                     onAction="#onOrganizeFiles"
                     styleClass="btn btn-success"/>
         </HBox>
-        <!-- Indicador de carpeta seleccionada -->
+
+
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="selection-indicator">
             <Label text="Carpeta seleccionada:" styleClass="label-header"/>
             <Label fx:id="selectedOrganizeFolderLabel" text="Cap carpeta seleccionada" styleClass="label-value"/>
@@ -116,7 +117,8 @@
                      prefRowCount="15"
                      styleClass="text-area"/>
         </TitledPane>
-        <!-- Barra de progreso para File Organizer -->
+
+
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Progrés:" styleClass="label"/>
             <ProgressBar fx:id="organizeProgressBar" progress="0.0" prefWidth="400" styleClass="progress-bar"/>
@@ -127,7 +129,6 @@
         </TabPane>
     </center>
 
-    <!-- Barra de Estado -->
     <bottom>
         <HBox alignment="CENTER_LEFT" style="-fx-padding: 5;">
             <Label fx:id="statusLabel" text="Ready" styleClass="label"/>
