@@ -42,14 +42,8 @@ cd hashscout
 
 3. Compila el projecte amb Maven:
 ```bash
-mvn clean package
+mvn clean javafx:run
 ```
-
-4. Executa l'aplicació:
-```bash
-java -jar target/hashscout-1.0.jar
-```
-
 ## 📸 Captures de Pantalla
 
 ### Generador de Hash
@@ -83,7 +77,7 @@ java -jar target/hashscout-1.0.jar
 
 ### Organitzador de Fitxers
 1. Fes clic a "Select Folder to Organize"
-2. Selecciona la carpeta que vols organitzar
+2. Selecciona la carpeta que vols organizer
 3. Els fitxers es categoritzaran automàticament en subcarpetes:
    - 📷 imatges (jpg, jpeg, png, gif, etc.)
    - 📄 documents (doc, pdf, txt, etc.)
