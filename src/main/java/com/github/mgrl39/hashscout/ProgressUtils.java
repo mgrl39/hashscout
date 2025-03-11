@@ -1,4 +1,4 @@
-package com.github.mgrl39.hashscout.utils;
+package com.github.mgrl39.hashscout;
 
 import javafx.application.Platform;
 
@@ -7,11 +7,6 @@ import java.util.function.Consumer;
 
 public class ProgressUtils {
     
-    /**
-     * Simulates progress for long-running operations by incrementing progress value at regular intervals.
-     * @param progressConsumer Consumer to receive progress updates
-     * @param completed AtomicBoolean indicating if the operation has completed
-     */
     public static void simulateProgress(Consumer<Double> progressConsumer, AtomicBoolean completed) {
         try {
             double progress = 0;
